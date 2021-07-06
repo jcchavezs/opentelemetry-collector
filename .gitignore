@@ -26,3 +26,5 @@ coverage.html
 # Wix
 *.wixobj
 *.wixpdb
+
+internal/data/.patched-otlp-proto

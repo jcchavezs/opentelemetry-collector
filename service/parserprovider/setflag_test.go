@@ -59,6 +59,6 @@ func TestSetFlags_empty(t *testing.T) {
 
 type emptyProvider struct{}
 
-func (el *emptyProvider) Get() (*configparser.Parser, error) {
+func (el *emptyProvider) Get() (configparser.Parser, error) {
 	return configparser.NewParser(), nil
 }

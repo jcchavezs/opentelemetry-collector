@@ -23,8 +23,8 @@ import (
 // ParserProvider is an interface that helps providing configuration's parser.
 // Implementations may load the parser from a file, a database or any other source.
 type ParserProvider interface {
-	// Get returns the config.Parser if succeed or error otherwise.
-	Get() (*configparser.Parser, error)
+	// Get returns the config.DefaultParser if succeed or error otherwise.
+	Get() (configparser.Parser, error)
 }
 
 // Watchable is an extension for ParserProvider that is implemented if the given provider

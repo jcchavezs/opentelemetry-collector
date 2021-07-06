@@ -48,8 +48,8 @@ func (cfg *Config) Validate() error {
 	return nil
 }
 
-// Unmarshal a config.Parser into the config struct.
-func (cfg *Config) Unmarshal(componentParser *configparser.Parser) error {
+// Unmarshal a config.DefaultParser into the config struct.
+func (cfg *Config) Unmarshal(componentParser configparser.Parser) error {
 	if componentParser == nil {
 		return nil
 	}

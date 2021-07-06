@@ -91,9 +91,9 @@ type pipelineSettings struct {
 	Exporters  []string `mapstructure:"exporters"`
 }
 
-// Load loads a Config from Parser.
+// Load loads a Config from DefaultParser.
 // After loading the config, `Validate()` must be called to validate.
-func Load(v *configparser.Parser, factories component.Factories) (*config.Config, error) {
+func Load(v configparser.Parser, factories component.Factories) (*config.Config, error) {
 	var cfg config.Config
 
 	// Load the config.
@@ -240,7 +240,7 @@ func loadService(rawService serviceSettings) (config.Service, error) {
 }
 
 // LoadReceiver loads a receiver config from componentConfig using the provided factories.
-func LoadReceiver(componentConfig *configparser.Parser, id config.ComponentID, factory component.ReceiverFactory) (config.Receiver, error) {
+func LoadReceiver(componentConfig configparser.Parser, id config.ComponentID, factory component.ReceiverFactory) (config.Receiver, error) {
 	// Create the default config for this receiver.
 	receiverCfg := factory.CreateDefaultConfig()
 	receiverCfg.SetIDName(id.Name())
@@ -438,9 +438,9 @@ func parseIDNames(pipelineID config.ComponentID, componentType string, names []s
 	return ret, nil
 }
 
-// expandEnvConfig updates a configparser.Parser with expanded values for all the values (simple, list or map value).
+// expandEnvConfig updates a configparser.DefaultParser with expanded values for all the values (simple, list or map value).
 // It does not expand the keys.
-func expandEnvConfig(v *configparser.Parser) {
+func expandEnvConfig(v configparser.Parser) {
 	for _, k := range v.AllKeys() {
 		v.Set(k, expandStringValues(v.Get(k)))
 	}
@@ -543,7 +543,7 @@ type deprecatedUnmarshaler interface {
 	Unmarshal(componentViperSection *viper.Viper, intoCfg interface{}) error
 }
 
-func unmarshal(componentSection *configparser.Parser, intoCfg interface{}) error {
+func unmarshal(componentSection configparser.Parser, intoCfg interface{}) error {
 	if cu, ok := intoCfg.(config.CustomUnmarshable); ok {
 		return cu.Unmarshal(componentSection)
 	}
@@ -552,9 +552,9 @@ func unmarshal(componentSection *configparser.Parser, intoCfg interface{}) error
 }
 
 // unmarshaler returns an unmarshaling function. It should be removed when deprecatedUnmarshaler is removed.
-func unmarshaler(factory component.Factory) func(componentViperSection *configparser.Parser, intoCfg interface{}) error {
+func unmarshaler(factory component.Factory) func(componentViperSection configparser.Parser, intoCfg interface{}) error {
 	if _, ok := factory.(deprecatedUnmarshaler); ok {
-		return func(componentParser *configparser.Parser, intoCfg interface{}) error {
+		return func(componentParser configparser.Parser, intoCfg interface{}) error {
 			return errors.New("deprecated way to specify custom unmarshaler no longer supported")
 		}
 	}

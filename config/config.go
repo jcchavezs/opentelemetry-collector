@@ -172,10 +172,10 @@ type validatable interface {
 // CustomUnmarshable defines an optional interface for custom configuration unmarshaling.
 // A configuration struct can implement this interface to override the default unmarshaling.
 type CustomUnmarshable interface {
-	// Unmarshal is a function that un-marshals a Parser into the unmarshable struct in a custom way.
-	// componentSection *Parser
+	// Unmarshal is a function that un-marshals a DefaultParser into the unmarshable struct in a custom way.
+	// componentSection *DefaultParser
 	//   The config for this specific component. May be nil or empty if no config available.
-	Unmarshal(componentSection *configparser.Parser) error
+	Unmarshal(componentSection configparser.Parser) error
 }
 
 // DataType is the data type that is supported for collection. We currently support

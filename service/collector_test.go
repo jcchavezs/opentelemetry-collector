@@ -247,7 +247,7 @@ func assertZPages(t *testing.T) {
 
 type minimalParserLoader struct{}
 
-func (*minimalParserLoader) Get() (*configparser.Parser, error) {
+func (*minimalParserLoader) Get() (configparser.Parser, error) {
 	configStr := `
 receivers:
   otlp:
@@ -275,7 +275,7 @@ type errParserLoader struct {
 	err error
 }
 
-func (epl *errParserLoader) Get() (*configparser.Parser, error) {
+func (epl *errParserLoader) Get() (configparser.Parser, error) {
 	return nil, epl.err
 }
 

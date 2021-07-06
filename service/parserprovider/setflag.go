@@ -41,7 +41,7 @@ func NewSetFlag(base ParserProvider) ParserProvider {
 	}
 }
 
-func (sfl *setFlagProvider) Get() (*configparser.Parser, error) {
+func (sfl *setFlagProvider) Get() (configparser.Parser, error) {
 	flagProperties := getSetFlag()
 	if len(flagProperties) == 0 {
 		return sfl.base.Get()
@@ -74,7 +74,7 @@ func (sfl *setFlagProvider) Get() (*configparser.Parser, error) {
 		return nil, fmt.Errorf("failed to read set flag config: %v", err)
 	}
 
-	var cp *configparser.Parser
+	var cp configparser.Parser
 	if cp, err = sfl.base.Get(); err != nil {
 		return nil, err
 	}
